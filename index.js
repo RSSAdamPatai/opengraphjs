@@ -77,8 +77,14 @@ var getOpenGraph = function(options, callback) {
 
             if(!openGraph.description || openGraph.description.length==0){
                 var selector = 'body';
+                if($('#main').length>0){
+                    selector='main';
+                }
                 if($('#content').length>0){
                     selector='content';
+                }
+                if($('#bodyContent').length>0){
+                    selector='bodyContent';
                 }
                 var desc = $(selector).text().replace(/(?=\s)[^ ]/g, ' ').trim().substr(0, 512);
                 var endIndex = desc.lastIndexOf('. ');
