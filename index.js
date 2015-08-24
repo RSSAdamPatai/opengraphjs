@@ -60,6 +60,13 @@ var getOpenGraph = function(options, callback) {
 
             if(!openGraph.image || openGraph.image.length==0){
                 openGraph.image = [];
+                var href = response.request.href;
+                if (href.lastIndexOf('/')==href.length-1){
+                    href = href.substring(0, href.length - 1);
+                }
+                if (href.indexOf('http')!=0){
+                    href = 'http://'+href;
+                }
                 $('img').each(function(){
                     var image = {};
                     for(var key in $(this)[0].attribs){
@@ -69,7 +76,17 @@ var getOpenGraph = function(options, callback) {
                             image[key] = $(this).attr(key);
                         }
                     }
+
                     if(!!image.url){
+                        if(image.url.indexOf('//')==0){
+                            image.url = 'http:'+image.url;
+                        }
+                        if(image.url.indexOf('/')==0){
+                            image.url = href+image.url;
+                        }
+                        if(image.url.indexOf('http')!=0){
+                            image.url = href+'/'+image.url;
+                        }
                         openGraph.image.push(image);
                     }
                 });
