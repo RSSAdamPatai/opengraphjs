@@ -77,14 +77,17 @@ var getOpenGraph = function(options, callback) {
 
             if(!openGraph.description || openGraph.description.length==0){
                 var selector = 'body';
-                if($('#main').length>0){
-                    selector='#main';
+                if($('body p').length>0){
+                    selector='body p';
                 }
-                if($('#content').length>0){
-                    selector='#content';
+                if($('#main p').length>0){
+                    selector='#main p';
                 }
-                if($('#bodyContent').length>0){
-                    selector='#bodyContent';
+                if($('#content p').length>0){
+                    selector='#content p';
+                }
+                if($('#bodyContent p').length>0){
+                    selector='#bodyContent p';
                 }
                 var desc = $(selector).text().replace(/(?=\s)[^ ]/g, ' ').trim().substr(0, 512);
                 var endIndex = desc.lastIndexOf('. ');
