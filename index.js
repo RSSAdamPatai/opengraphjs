@@ -75,6 +75,13 @@ var getOpenGraph = function(options, callback) {
                 });
             }
 
+            if(!openGraph.description || openGraph.description.length==0){
+                var desc = $('body').text().replace(/(?=\s)[^ ]/g, ' ').trim().substr(0, 512);
+                var endIndex = desc.lastIndexOf('. ');
+                desc = desc.substr(0, endIndex!=-1?endIndex+1: desc.length+1);
+                openGraph.description = desc;
+            }
+
             cb(null, openGraph);
         } else {
             cb(err);
