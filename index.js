@@ -58,6 +58,23 @@ var getOpenGraph = function(options, callback) {
                 openGraph.title = title.text();
             }
 
+            if(!openGraph.image || openGraph.image.length==0){
+                openGraph.image = [];
+                $('img').each(function(){
+                    var image = {};
+                    for(var key in $(this)[0].attribs){
+                        if(key==='src'){
+                            image.url = $(this).attr('src');
+                        }else{
+                            image[key] = $(this).attr(key);
+                        }
+                    }
+                    if(!!image.url){
+                        openGraph.image.push(image);
+                    }
+                });
+            }
+
             cb(null, openGraph);
         } else {
             cb(err);

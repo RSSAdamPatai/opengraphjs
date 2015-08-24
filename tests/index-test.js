@@ -11,6 +11,7 @@ describe('Open Graph', function () {
         nock('http://ogp.me').get('/optional').replyWithFile(200, __dirname + '/fixtures/ogp_org_optional.html');
         nock('http://ogp.me').get('/structured').replyWithFile(200, __dirname + '/fixtures/ogp_org_structured.html');
         nock('http://ogp.me').get('/arrays').replyWithFile(200, __dirname + '/fixtures/ogp_org_arrays.html');
+        nock('http://ogp.me').get('/noimage').replyWithFile(200, __dirname + '/fixtures/ogp_org_no_image.html');
     });
     
     it('should get basic metadata', function (done) {
@@ -126,5 +127,19 @@ describe('Open Graph', function () {
 
             done();
         });
+    });
+
+    it('should get images from page', function (done) {
+      openGraph({
+        url: "http://ogp.me/noimage"
+      }, function (err, data) {
+        expect(data.image[0]).to.eql({ alt: 'Open Graph protocol logo',
+            url: 'http://ogp.me/logo.png',
+            width: '300',
+            height: '300'
+        });
+        expect(data.image[3]).to.eql({ alt: 'image13', url: 'http://ogp.me/im3.png' });
+        done();
+      });
     });
 });
