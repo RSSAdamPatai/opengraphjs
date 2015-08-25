@@ -56,6 +56,9 @@ var getOpenGraph = function(options, callback) {
 
             if (!openGraph.title) {
                 openGraph.title = title.text();
+                if(openGraph.title===''){
+                    openGraph.title = response.request.uri.host;
+                }
             }
 
             if(!openGraph.image || openGraph.image.length==0){
@@ -93,6 +96,8 @@ var getOpenGraph = function(options, callback) {
             }
 
             if(!openGraph.description || openGraph.description.length==0){
+                $('script').remove();
+                $('style').remove();
                 var selector = 'body';
                 if($('body p').length>0){
                     selector='body p';
