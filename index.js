@@ -119,6 +119,7 @@ var getOpenGraph = function(options, callback) {
 
             cb(null, openGraph);
         } else {
+            err = err || new Error('Status code is: '+response.statusCode);
             cb(err);
         }
     });
